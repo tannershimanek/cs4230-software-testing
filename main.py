@@ -20,8 +20,9 @@ def driver():
             cmd = commands.WithdrawFromSavingsCommand(amount)
         elif command == "create_new_loan" or command == "4":
             amount = float(input("Enter loan amount: "))
-            interest_rate = float(input("Enter interest rate: "))
-            cmd = commands.CreateNewLoanCommand(amount, interest_rate)
+            # interest_rate = float(input("Enter interest rate: "))
+            cmd = commands.CreateNewLoanCommand(
+                amount, config.BANK_CONFIG.get('interest_rate'))
         elif command == "pay_loan" or command == "5":
             loan_id = int(input("Enter loan ID: "))
             amount = float(input("Enter amount to pay: "))
