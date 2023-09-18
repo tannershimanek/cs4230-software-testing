@@ -2,11 +2,15 @@ from loan import Loan
 import math
 import config
 
+# note: interest is applied to the loan amount before the late fee is applied
+
+
 # Receiver
 class BankSystem:
     savings_balance = 0
     savings_interest_rate = config.BANK_CONFIG.get('savings_rate')
     loans = {}
+    loan_payments = {}  # Track payments for each loan for the current month
     num_loans = 0
     current_month = 1
     transactions = []
@@ -16,9 +20,19 @@ class BankSystem:
         """Advances the month by 1, processes interest rates and late fees, and generates a report."""
         self.current_month += 1
         print(f"Advanced to month {self.current_month}\n")
-        # todo: handle late fees
+
+        # Apply late fee to loans without payments
+        for loan_id, loan in self.loans.items():
+            if loan_id not in self.loan_payments or self.loan_payments[loan_id] == 0:
+                loan["amount"] += 50
+                self.log_transaction(
+                    f"Applied $50 late fee to loan {loan_id}. New balance: ${loan['amount']}")
+                print(
+                    f"Applied $50 late fee to loan {loan_id}. New balance: ${loan['amount']}")
+
         self.process_loan_interest()
         self.process_savings_interest()
+        self.loan_payments.clear()  # Reset loan payments for the new month
         self.generate_report()
 
     @classmethod
@@ -35,7 +49,8 @@ class BankSystem:
     @classmethod
     def deposit_to_savings(self, amount):
         """Deposits the given amount to the savings account."""
-        self.savings_balance += math.floor(amount*100)/100  # rounds down to the nearest cent
+        self.savings_balance += math.floor(amount*100) / \
+            100  # rounds down to the nearest cent
         self.log_transaction(
             f"Deposited ${amount} to savings. New balance: ${self.savings_balance}")
         print(
@@ -70,13 +85,15 @@ class BankSystem:
         """Pays the given amount to the given loan from the savings account."""
         if loan_id in self.loans:
             self.loans[loan_id]["amount"] -= amount
+            self.loan_payments[loan_id] = self.loan_payments.get(
+                loan_id, 0) + amount
             if self.loans[loan_id]["amount"] < 0.01:
                 self.loans[loan_id]["amount"] = 0
-                self.loans.pop(loan_id) # remove loan from loans dict
+                self.loans.pop(loan_id)  # remove loan from loans dict
                 self.log_transaction(f"Loan {loan_id} paid off!")
                 print(f"Loan {loan_id} paid off!")
             print(
-                f"Paid ${amount} for loan {loan_id}. Remaining amount: ${self.loans[loan_id]['amount']}")
+                f"Paid ${amount:.2f} for loan {loan_id}. Remaining amount: ${self.loans[loan_id]['amount']:.2f}")
         else:
             print("Invalid loan ID!")
 
@@ -90,7 +107,7 @@ class BankSystem:
         """Shows the given loan."""
         if loan_id in self.loans:
             print(
-                f"Loan {loan_id}: ${self.loans[loan_id]['amount']} at {self.loans[loan_id]['interest_rate']}% interest rate")
+                f"Loan {loan_id}: ${self.loans[loan_id]['amount']:.2f} at {self.loans[loan_id]['interest_rate']:.2f}% interest rate")
         else:
             print("Invalid loan ID!")
 
@@ -99,22 +116,26 @@ class BankSystem:
         """Shows all loans."""
         for loan_id, loan in self.loans.items():
             print(
-                f"Loan {loan_id}: ${loan['amount']} at {loan['interest_rate']}% interest rate")
+                f"Loan {loan_id}: ${loan['amount']:.2f} at {loan['interest_rate']:.2f}% interest rate")
 
     @classmethod
     def process_loan_interest(self):
         for loan_id, loan in self.loans.items():
             interest = (loan['amount'] * loan['interest_rate']) / 100
             loan['amount'] += math.ceil(interest*100)/100
-            self.log_transaction(f"Applied ${interest:.2f} interest to loan {loan_id}. New balance: ${loan['amount']:.2f}")
-            print(f"Applied ${interest:.2f} interest to loan {loan_id}. New balance: ${loan['amount']:.2f}")
+            self.log_transaction(
+                f"Applied ${interest:.2f} interest to loan {loan_id}. New balance: ${loan['amount']:.2f}")
+            print(
+                f"Applied ${interest:.2f} interest to loan {loan_id}. New balance: ${loan['amount']:.2f}")
 
     @classmethod
     def process_savings_interest(self):
         interest = (self.savings_balance * self.savings_interest_rate) / 100
         self.savings_balance += interest
-        self.log_transaction(f"Applied ${interest:.2f} interest to savings. New balance: ${self.savings_balance:.2f}")
-        print(f"Applied ${interest:.2f} interest to savings. New balance: ${self.savings_balance:.2f}")
+        self.log_transaction(
+            f"Applied ${interest:.2f} interest to savings. New balance: ${self.savings_balance:.2f}")
+        print(
+            f"Applied ${interest:.2f} interest to savings. New balance: ${self.savings_balance:.2f}")
 
     @classmethod
     def generate_report(self):

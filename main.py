@@ -21,8 +21,8 @@ def driver():
         elif command == "create_new_loan" or command == "4":
             amount = float(input("Enter loan amount: "))
             # interest_rate = float(input("Enter interest rate: "))
-            cmd = commands.CreateNewLoanCommand(
-                amount, config.BANK_CONFIG.get('interest_rate'))
+            interest_rate = config.BANK_CONFIG.get('interest_rate')
+            cmd = commands.CreateNewLoanCommand(amount, interest_rate)
         elif command == "pay_loan" or command == "5":
             loan_id = int(input("Enter loan ID: "))
             amount = float(input("Enter amount to pay: "))
@@ -49,12 +49,8 @@ def driver():
 
 
 def main():
-
-    # print("Hello World!")
-    # print(copy.copy(CONFIG.get('interest_rate')))
-
-    # loan = Loan(101, 1000)
-    # print(loan)
+    print("\nWelcome to the WeCheatEm Bank System!")
+    commands.HelpCommand().execute()
     driver()
 
 
