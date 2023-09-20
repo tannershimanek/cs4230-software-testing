@@ -1,6 +1,5 @@
 from Loan import Loan
 from SavingsAccount import SavingsAccount
-import math
 import config
 
 # note: interest is applied to the loan amount before the late fee is applied
