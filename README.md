@@ -17,6 +17,7 @@
 *The above items can be done through commands, excluding user id generation.*e
 
 
+<br>
 
 ## System
 
@@ -76,6 +77,7 @@ Month 2: Applied $13.26 interest to loan 2. New balance: $11063.26
 Month 2: Applied $0.12 interest to savings. New balance: $400.12
 ```
 
+<br>
 
 ## Loans
 
@@ -95,6 +97,7 @@ Month 2: Applied $0.12 interest to savings. New balance: $400.12
 - The loan payment cannot be greater than the amount in savings.
 
 
+<br>
 
 ## Savings
 
