@@ -1,4 +1,5 @@
 from Loan import Loan
+from SavingsAccount import SavingsAccount
 import math
 import config
 
@@ -19,8 +20,8 @@ todo:
 
 
 class BankSystem:
-    savings_balance = 0
-    savings_interest_rate = config.BANK_CONFIG.get('savings_rate')
+    # savings_balance = 0
+    savings = SavingsAccount(config.BANK_CONFIG.get('savings_rate'))
     loans = {}
     num_loans = 0
     current_month = 1
@@ -54,26 +55,25 @@ class BankSystem:
 
     @classmethod
     def deposit_to_savings(self, amount):
-        """Deposits the given amount to the savings account."""
-        self.savings_balance += math.floor(amount*100) / \
-            100  # rounds down to the nearest cent
-        self.log_transaction(
-            f"Deposited ${amount} to savings. New balance: ${self.savings_balance}")
-        print(
-            f"Deposited ${amount} to savings. New balance: ${self.savings_balance}")
+        message = self.savings.deposit(amount)
+        self.log_transaction(message)
+        print(message)
 
     @classmethod
     def withdraw_from_savings(self, amount):
-        """Withdraws the given amount from the savings account."""
-        if amount <= self.savings_balance:
-            self.savings_balance -= amount
-            self.savings_balance = round(self.savings_balance, 2)
-            self.log_transaction(
-                f"Withdrew ${amount} from savings. New balance: ${self.savings_balance}")
-            print(
-                f"Withdrew ${amount} from savings. New balance: ${self.savings_balance}")
-        else:
-            print("Insufficient funds!")
+        message = self.savings.withdraw(amount)
+        self.log_transaction(message)
+        print(message)
+
+    @classmethod
+    def process_savings_interest(self):
+        message = self.savings.apply_interest()
+        self.log_transaction(message)
+        print(message)
+
+    @classmethod
+    def show_savings_balance(self):
+        print(f"Savings balance: ${self.savings.balance:.2f}")
 
     @classmethod
     def create_new_loan(self, amount, interest_rate):
@@ -129,11 +129,6 @@ class BankSystem:
                 f"Applied ${interest:.2f} interest to loan {loan_id}. New balance: ${loan.amount:.2f}")
 
     @classmethod
-    def show_savings_balance(self):
-        """Shows the current savings balance."""
-        print(f"Savings balance: ${self.savings_balance:.2f}")
-
-    @classmethod
     def show_loan(self, loan_id):
         """Shows the given loan."""
         if loan_id in self.loans:
@@ -155,30 +150,23 @@ class BankSystem:
                 f"Loan {loan_id}: ${loan.amount:.2f} at {loan.interest_rate:.2f}% interest rate")
 
     @classmethod
-    def process_savings_interest(self):
-        interest = (self.savings_balance *
-                    (self.savings_interest_rate / 12)) / 100
-        self.savings_balance += interest
-        self.log_transaction(
-            f"Applied ${interest:.2f} interest to savings. New balance: ${self.savings_balance:.2f}")
-        print(
-            f"Applied ${interest:.2f} interest to savings. New balance: ${self.savings_balance:.2f}")
-
-    @classmethod
     def generate_report(cls):
         """Generates a report for the bank system."""
         print("\n--- Bank System Report ---")
+        
+        # Savings Account Report
         print("\nSavings Account:")
-        print(f"Balance: ${round(cls.savings_balance, 2):.2f}")
+        print(f"Balance: ${cls.savings.balance:.2f}")
 
+        # Loans Report
         print("\nLoans:")
         if not cls.loans:
             print("No loans available.")
         else:
             for loan_id, loan in cls.loans.items():
-                print(
-                    f"Loan {loan_id}: ${loan.amount:.2f} at {loan.interest_rate:.2f}% interest rate")
+                print(f"Loan {loan_id}: ${loan.amount:.2f} at {loan.interest_rate:.2f}% interest rate")
 
+        # Transactions Report
         print("\nTransactions:")
         for transaction in cls.transactions:
             print(transaction)
