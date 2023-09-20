@@ -1,9 +1,8 @@
 # cs4230-software-testing
----
 
+<br>
 
 ## Customer
----
 
 - A customer is issued a user id by the system.
 - A customer has one savings accuont at all times.
@@ -15,12 +14,12 @@
 - A customer can advance a month.
 - When a month is advanced, a the system will generate a report.
 
-*The above items can be done through commands, excluding user id generation.*e
+*The above items can be done through commands, excluding user id generation.*
 
 
+<br>
 
 ## System
----
 
 ### Commands
 todo
@@ -78,9 +77,9 @@ Month 2: Applied $13.26 interest to loan 2. New balance: $11063.26
 Month 2: Applied $0.12 interest to savings. New balance: $400.12
 ```
 
+<br>
 
 ## Loans
----
 
 - A loan id will be issued by the system.
 - A customer can initiate a new loan. (max 3)
@@ -98,9 +97,9 @@ Month 2: Applied $0.12 interest to savings. New balance: $400.12
 - The loan payment cannot be greater than the amount in savings.
 
 
+<br>
 
-### Savings
----
+## Savings
 
 - The savings balance cannot be negative.
 - The user cannot withdraw or deposit an amount under 0.01.
