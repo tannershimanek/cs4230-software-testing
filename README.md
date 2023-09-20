@@ -1,9 +1,8 @@
 # cs4230-software-testing
----
+
 
 
 ## Customer
----
 
 - A customer is issued a user id by the system.
 - A customer has one savings accuont at all times.
@@ -20,7 +19,6 @@
 
 
 ## System
----
 
 ### Commands
 todo
@@ -80,7 +78,6 @@ Month 2: Applied $0.12 interest to savings. New balance: $400.12
 
 
 ## Loans
----
 
 - A loan id will be issued by the system.
 - A customer can initiate a new loan. (max 3)
@@ -100,7 +97,6 @@ Month 2: Applied $0.12 interest to savings. New balance: $400.12
 
 
 ## Savings
----
 
 - The savings balance cannot be negative.
 - The user cannot withdraw or deposit an amount under 0.01.
