@@ -99,7 +99,7 @@ Month 2: Applied $0.12 interest to savings. New balance: $400.12
 
 
 
-### Savings
+## Savings
 ---
 
 - The savings balance cannot be negative.
