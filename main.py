@@ -4,6 +4,26 @@ import config
 # from loan import Loan
 CONFIG = config.BANK_CONFIG
 
+
+user_commands = {
+    "advance_month": ["advance_month", "Advance Month", "advance month"],
+    "deposit_to_savings": ["deposit_to_savings", "Deposit to Savings", "deposit to savings"],
+    "withdraw_from_savings": ["withdraw_from_savings", "Withdraw from Savings", "withdraw from savings"],
+    "create_new_loan": ["create_new_loan", "Create New Loan", "create new loan"],
+    "pay_loan": ["pay_loan", "Pay Loan", "pay loan"],
+    "show_savings_balance": ["show_savings_balance", "Show Savings Balance", "show savings balance"],
+    "show_loan": ["show_loan", "Show Loan", "show loan"],
+    "show_all_loans": ["show_all_loans", "Show All Loans", "show all loans"],
+    "generate_report": ["generate_report", "Generate Report", "generate report"],
+    "help": ["help", "Help"],
+}
+
+# add a number to each array in user_commands
+for key, value in user_commands.items():
+    value.append(str(list(user_commands.keys()).index(key) + 1))
+
+# todo: use the dict above to create commands
+
 def driver():
     while True:
         command = input(
