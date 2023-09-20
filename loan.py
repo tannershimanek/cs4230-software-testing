@@ -1,13 +1,27 @@
-import config
-CONFIG = config.BANK_CONFIG
-
 class Loan:
-    def __init__(self, id, balance) -> None:
-        self.id = id + CONFIG.get('loan_key')  # Will also need the current loan number
-        self.interest_rate = CONFIG.get('interest_rate')
-        self.balance = balance
-        self.interest_added = 0
-        self.late_fee = True
+    def __init__(self, amount, interest_rate):
+        self.amount = amount
+        self.interest_rate = interest_rate
+        self.payment_this_month = 0
 
-    def __str__(self):
-        return f"Loan (ID = {self.id}, Balance = {self.balance}, IntRate = {self.interest_rate:.0%})"
+    def apply_interest(self):
+        interest = (self.amount * self.interest_rate) / 100
+        self.amount += interest
+        return interest
+
+    def apply_late_fee(self):
+        self.amount += 50
+
+    def pay(self, amount):
+        self.amount -= amount
+        self.payment_this_month += amount
+
+    def calculate_minimum_payment(self):
+        interest_due = (self.amount * self.interest_rate) / 100
+        one_percent_of_loan = 0.01 * self.amount
+        late_fee = 50 if self.payment_this_month == 0 else 0
+        min_payment = interest_due + one_percent_of_loan + late_fee
+        return max(min_payment, 10)
+
+    def reset_monthly_payment(self):
+        self.payment_this_month = 0
