@@ -4,8 +4,6 @@ import config
 # from loan import Loan
 CONFIG = config.BANK_CONFIG
 
-#Test commit by Natalina
-
 def driver():
     while True:
         command = input(

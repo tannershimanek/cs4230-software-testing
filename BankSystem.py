@@ -72,13 +72,16 @@ class BankSystem:
     @classmethod
     def create_new_loan(self, amount, interest_rate):
         """Creates a new loan with the given amount and interest rate."""
-        loan_id = len(self.loans) + 1
-        interest_rate = config.BANK_CONFIG.get('interest_rate')
-        # math.ceil(amount*100)/100 rounds up to the nearest cent
-        self.loans[loan_id] = {"amount": math.ceil(amount*100)/100,
-                               "interest_rate": interest_rate}
-        print(
-            f"Created new loan with ID {loan_id} for ${amount} at {interest_rate}% interest rate")
+        if 500 <= amount <= 50000:    
+            loan_id = len(self.loans) + 1
+            interest_rate = config.BANK_CONFIG.get('interest_rate')
+            # math.ceil(amount*100)/100 rounds up to the nearest cent
+            self.loans[loan_id] = {"amount": math.ceil(amount*100)/100,
+                                "interest_rate": interest_rate}
+            print(
+                f"Created new loan with ID {loan_id} for ${amount} at {interest_rate}% interest rate")
+        else:
+            print("Loan amount is invalid. Please ensure amount is between $500 and $50,000.")
 
     @classmethod
     def pay_loan(self, loan_id, amount):
