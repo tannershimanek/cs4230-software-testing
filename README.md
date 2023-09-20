@@ -14,7 +14,7 @@
 - A customer can advance a month.
 - When a month is advanced, a the system will generate a report.
 
-*The above items can be done through commands, excluding user id generation.*e
+*The above items can be done through commands, excluding user id generation.*
 
 
 <br>
