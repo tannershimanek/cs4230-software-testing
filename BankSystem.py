@@ -1,4 +1,4 @@
-from Loan import Loan
+from loan import Loan
 from SavingsAccount import SavingsAccount
 import config
 
@@ -34,6 +34,10 @@ class BankSystem:
             loan.reset_monthly_payment()
 
         self.generate_report()
+
+    @classmethod
+    def create_savings_account():
+        """ Creates a savings account. """
 
     @classmethod
     def log_transaction(self, description):
