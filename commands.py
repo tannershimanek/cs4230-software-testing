@@ -9,6 +9,7 @@ class Command(ABC):
     def execute(self):
         pass
 
+
 # Concrete Commands
 
 
