@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from BankSystem import BankSystem
+from Banking.BankSystem import BankSystem
 
 
 # Command Interface
