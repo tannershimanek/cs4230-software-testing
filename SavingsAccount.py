@@ -4,10 +4,14 @@ class SavingsAccount:
         self.interest_rate = interest_rate
 
     def deposit(self, amount):
+        if amount < 0:
+            return "Deposit amount cannot be negative."
         self.balance += amount
         return f"Deposited ${amount:.2f}. New balance: ${self.balance:.2f}"
 
     def withdraw(self, amount):
+        if amount < 0:
+            return "Withdrawal amount may not be negative."
         if amount <= self.balance:
             self.balance -= amount
             return f"Withdrew ${amount:.2f}. New balance: ${self.balance:.2f}"

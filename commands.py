@@ -18,11 +18,6 @@ class AdvanceMonthCommand(Command):
         BankSystem.advance_month()
 
 
-class CreateSavingsAccountCommand(Command):
-    def execute(self):
-        BankSystem.create_savings_account()
-
-
 class DepositToSavingsCommand(Command):
     def __init__(self, amount):
         self.amount = amount
