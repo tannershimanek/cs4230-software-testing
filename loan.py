@@ -1,3 +1,4 @@
+
 class Loan:
     def __init__(self, amount, interest_rate):
         self.amount = amount
