@@ -1,4 +1,4 @@
-from loan import Loan
+from Loan import Loan
 from SavingsAccount import SavingsAccount
 import config
 
