@@ -21,4 +21,4 @@ class SavingsAccount:
     def apply_interest(self):
         interest = (self.balance * self.interest_rate) / 100
         self.balance += interest
-        return f"Applied ${interest:.2f} interest. New balance: ${self.balance:.2f}"
+        return f"Applied ${interest:.2f} interest. New savings balance: ${self.balance:.2f}"

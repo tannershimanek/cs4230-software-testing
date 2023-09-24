@@ -5,7 +5,7 @@ class Loan:
         self.payment_this_month = 0
 
     def apply_interest(self):
-        interest = (self.amount * self.interest_rate) / 100
+        interest = (self.amount * (self.interest_rate / 12)) / 100
         self.amount += interest
         return interest
 

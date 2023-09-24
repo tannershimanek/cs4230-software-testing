@@ -1,4 +1,4 @@
-import Commands
+import Banking.Commands as Commands
 import config
 CONFIG = config.BANK_CONFIG
 
@@ -68,6 +68,11 @@ def driver():
 def main():
     print("\nWelcome to the WeCheatEm Bank System!")
     Commands.HelpCommand().execute()
+    # for testing REMOVE BEFORE COMMIT
+    Commands.DepositToSavingsCommand(1000).execute()
+    Commands.CreateNewLoanCommand(500, 12).execute()
+    Commands.PayLoanCommand(1, 150).execute()
+    Commands.AdvanceMonthCommand().execute()
     driver()
 
 

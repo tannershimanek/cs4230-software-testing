@@ -1,5 +1,5 @@
-from Loan import Loan
-from SavingsAccount import SavingsAccount
+from Banking.Loan import Loan
+from Banking.SavingsAccount import SavingsAccount
 import config
 
 # note: interest is applied to the loan amount before the late fee is applied
@@ -20,6 +20,7 @@ class BankSystem:
         print(f"Advanced to month {self.current_month}\n")
 
         for loan_id, loan in self.loans.items():
+            print(loan.payment_this_month)
             if loan.payment_this_month == 0:
                 loan.apply_late_fee()
                 self.log_transaction(
@@ -82,14 +83,14 @@ class BankSystem:
                 "Loan amount is invalid. Please ensure amount is between $500 and $50,000.")
 
     @classmethod
-    def pay_loan(cls, loan_id, amount):
+    def pay_loan(self, loan_id, amount):
         """Pays the given amount to the given loan from the savings account."""
-        if amount > cls.savings.balance:
+        if amount > self.savings.balance:
             print(f"Payment amount exceeds savings balance. Payment not processed.")
             return
 
-        if loan_id in cls.loans:
-            loan = cls.loans[loan_id]
+        if loan_id in self.loans:
+            loan = self.loans[loan_id]
             min_payment = loan.calculate_minimum_payment()
 
             if amount < min_payment:
@@ -103,14 +104,15 @@ class BankSystem:
                 return
 
             loan.pay(amount)
+
             # Subtract the payment amount from the savings balance
-            cls.savings.withdraw(amount)
-            cls.log_transaction(
+            self.savings.withdraw(amount)
+            self.log_transaction(
                 f"Paid ${amount:.2f} for loan {loan_id}. Remaining amount: ${loan.amount:.2f}")
 
             if loan.amount < 0.01:
-                cls.loans.pop(loan_id)
-                cls.log_transaction(f"Loan {loan_id} paid off!")
+                self.loans.pop(loan_id)
+                self.log_transaction(f"Loan {loan_id} paid off!")
                 print(f"Loan {loan_id} paid off!")
             else:
                 print(
@@ -149,26 +151,26 @@ class BankSystem:
                 f"Loan {loan_id}: ${loan.amount:.2f} at {loan.interest_rate:.2f}% interest rate")
 
     @classmethod
-    def generate_report(cls):
+    def generate_report(self):
         """Generates a report for the bank system."""
         print("\n--- Bank System Report ---")
 
         # Savings Account Report
         print("\nSavings Account:")
-        print(f"Balance: ${cls.savings.balance:.2f}")
+        print(f"Balance: ${self.savings.balance:.2f}")
 
         # Loans Report
         print("\nLoans:")
-        if not cls.loans:
+        if not self.loans:
             print("No loans available.")
         else:
-            for loan_id, loan in cls.loans.items():
+            for loan_id, loan in self.loans.items():
                 print(
-                    f"Loan {loan_id}: ${loan.amount:.2f} at {loan.interest_rate:.2f}% interest rate")
+                    f"Loan {loan_id}: ${loan.amount:.2f} at {loan.interest_rate:.2f}% annual interest rate")
 
         # Transactions Report
         print("\nTransactions:")
-        for transaction in cls.transactions:
+        for transaction in self.transactions:
             print(transaction)
 
     @classmethod
