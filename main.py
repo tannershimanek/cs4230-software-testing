@@ -1,7 +1,5 @@
-import commands
+import Commands
 import config
-# import copy
-# from loan import Loan
 CONFIG = config.BANK_CONFIG
 
 
@@ -30,38 +28,38 @@ def driver():
             "\nEnter your command (type 'help' for available commands): ").lower().strip()
 
         if command == "advance_month" or command == "1":
-            cmd = commands.AdvanceMonthCommand()
+            cmd = Commands.AdvanceMonthCommand()
         elif command == "deposit_to_savings" or command == "2":
             amount = float(input("Enter amount to deposit: "))
-            cmd = commands.DepositToSavingsCommand(amount)
+            cmd = Commands.DepositToSavingsCommand(amount)
         elif command == "withdraw_from_savings" or command == "3":
             amount = float(input("Enter amount to withdraw: "))
-            cmd = commands.WithdrawFromSavingsCommand(amount)
+            cmd = Commands.WithdrawFromSavingsCommand(amount)
         elif command == "create_new_loan" or command == "4":
             amount = float(input("Enter loan amount: "))
             # interest_rate = float(input("Enter interest rate: "))
             interest_rate = config.BANK_CONFIG.get('interest_rate')
-            cmd = commands.CreateNewLoanCommand(amount, interest_rate)
+            cmd = Commands.CreateNewLoanCommand(amount, interest_rate)
         elif command == "pay_loan" or command == "5":
             loan_id = int(input("Enter loan ID: "))
             amount = float(input("Enter amount to pay: "))
-            cmd = commands.PayLoanCommand(loan_id, amount)
+            cmd = Commands.PayLoanCommand(loan_id, amount)
         elif command == "show_savings_balance" or command == "6":
-            cmd = commands.ShowSavingsBalanceCommand()
+            cmd = Commands.ShowSavingsBalanceCommand()
         elif command == "show_loan" or command == "7":
             loan_id = int(input("Enter loan ID: "))
-            cmd = commands.ShowLoanCommand(loan_id)
+            cmd = Commands.ShowLoanCommand(loan_id)
         elif command == "show_all_loans" or command == "8":
-            cmd = commands.ShowAllLoansCommand()
+            cmd = Commands.ShowAllLoansCommand()
         elif command == "generate_report" or command == "9":
-            cmd = commands.GenerateReportCommand()
+            cmd = Commands.GenerateReportCommand()
         elif command == "help" or command == "10":
-            cmd = commands.HelpCommand()
+            cmd = Commands.HelpCommand()
         elif command == "exit" or command == "0":
             print("Exiting the system. Goodbye!")
             break
         else:
-            print("Invalid command. Type 'help' for available commands.")
+            print("Invalid command. Type 'help' for available Commands.")
             continue
 
         cmd.execute()
@@ -69,7 +67,7 @@ def driver():
 
 def main():
     print("\nWelcome to the WeCheatEm Bank System!")
-    commands.HelpCommand().execute()
+    Commands.HelpCommand().execute()
     driver()
 
 
