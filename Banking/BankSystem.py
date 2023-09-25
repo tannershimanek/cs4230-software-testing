@@ -71,6 +71,13 @@ class BankSystem:
 
     @classmethod
     def create_new_loan(self, amount, interest_rate):
+        try:
+            amount = float(amount)
+            interest_rate = float(interest_rate)
+        except ValueError:
+            print("Invalid input types for loan amount or interest rate.")
+            return
+
         if len(self.loans) >= 3:
             print("Maximum number of loans reached. Cannot create a new loan.")
             return
@@ -87,6 +94,12 @@ class BankSystem:
     @classmethod
     def pay_loan(self, loan_id, amount):
         """Pays the given amount to the given loan from the savings account."""
+        try:
+            loan_id = int(loan_id)
+            amount = float(amount)
+        except ValueError:
+            print("Invalid loan ID or amount. Please enter numerical values.")
+            return
         if amount > self.savings.balance:
             print(f"Payment amount exceeds savings balance. Payment not processed.")
             return
@@ -193,3 +206,22 @@ class BankSystem:
         ----------------
         0. Exit
         """)
+
+
+    @staticmethod
+    def validate_float_input(prompt):
+        """ Ensures that input is a float value """
+        while True:
+            try:
+                return float(input(prompt))
+            except ValueError:
+                print("Invalid input. Please enter a numerical value.")
+
+    @staticmethod
+    def validate_int_input(prompt):
+        """ Ensures that input is an int"""
+        while True:
+            try:
+                return int(input(prompt))
+            except ValueError:
+                print("Invalid input. Please enter an integer.")
