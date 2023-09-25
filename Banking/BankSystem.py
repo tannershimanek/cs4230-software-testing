@@ -37,8 +37,9 @@ class BankSystem:
         self.generate_report()
 
     @classmethod
-    def create_savings_account():
+    def create_savings_account(self):
         """ Creates a savings account. """
+        pass
 
     @classmethod
     def log_transaction(self, description):

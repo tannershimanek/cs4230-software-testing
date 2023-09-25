@@ -1,5 +1,10 @@
 class Loan:
+    '''Loan object'''
     def __init__(self, amount, interest_rate):
+        if amount == 0:
+            raise ValueError("Loan amount cannot be zero")
+        if amount < 0:
+            raise ValueError("Loan amount cannot be negative")
         self.amount = amount
         self.interest_rate = interest_rate
         self.payment_this_month = 0
