@@ -11,6 +11,7 @@ class BankSystem:
     savings = SavingsAccount(config.BANK_CONFIG.get('savings_rate'))
     loans = {}
     num_loans = 0
+    current_loan_number = 0
     current_month = 1
     transactions = []
 
@@ -83,7 +84,8 @@ class BankSystem:
             return
 
         if 500 <= amount <= 50000:
-            loan_id = len(self.loans) + 1
+            loan_id = self.current_loan_number + 1
+            self.current_loan_number += 1
             self.loans[loan_id] = Loan(amount, interest_rate)
             print(
                 f"Created new loan with ID {loan_id} for ${amount} at {interest_rate}% interest rate")
