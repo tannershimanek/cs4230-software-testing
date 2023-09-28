@@ -6,6 +6,8 @@ class SavingsAccount:
     def deposit(self, amount):
         if amount < 0:
             return "Deposit amount cannot be negative."
+        if amount > 1000000:
+            return "Deposit cannot exceed $1,000,000."
         self.balance += amount
         return f"Deposited ${amount:.2f}. New balance: ${self.balance:.2f}"
 

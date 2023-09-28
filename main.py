@@ -31,7 +31,7 @@ def driver():
         if command == "advance_month" or command == "1":
             cmd = Commands.AdvanceMonthCommand()
         elif command == "deposit_to_savings" or command == "2":
-            amount = BankSystem.validate_float_input("Enter amount to deposit: ")
+            amount = BankSystem.validate_float_input("Enter amount to deposit (Up to $1,000,000): ")
             cmd = Commands.DepositToSavingsCommand(amount)
         elif command == "withdraw_from_savings" or command == "3":
             amount = BankSystem.validate_float_input("Enter amount to withdraw: ")
