@@ -9,6 +9,7 @@ import config
 
 class BankSystem:
     savings = SavingsAccount(config.BANK_CONFIG.get('savings_rate'))
+    late_fee = config.BANK_CONFIG.get('late_fee')
     loans = {}
     num_loans = 0
     current_loan_number = 0
@@ -21,13 +22,13 @@ class BankSystem:
         print(f"Advanced to month {self.current_month}\n")
 
         for loan_id, loan in self.loans.items():
-            print(loan.payment_this_month)
-            if loan.payment_this_month == 0:
+            print(f"Loan {loan_id} payment: ${loan.payment_this_month}")
+            if loan.payment_this_month < loan.calculate_minimum_payment():
                 loan.apply_late_fee()
                 self.log_transaction(
-                    f"Applied $50 late fee to loan {loan_id}. New balance: ${loan.amount}")
+                    f"Applied ${self.late_fee} late fee to Loan {loan_id}. New balance: ${loan.amount:.2f}")
                 print(
-                    f"Applied $50 late fee to loan {loan_id}. New balance: ${loan.amount}")
+                    f"Applied ${self.late_fee} late fee to Loan {loan_id}. New balance: ${loan.amount:.2f}")
 
         self.process_loan_interest()
         self.process_savings_interest()
@@ -110,15 +111,14 @@ class BankSystem:
             loan = self.loans[loan_id]
             min_payment = loan.calculate_minimum_payment()
 
-            if amount < min_payment:
-                print(
-                    f"Payment is below the minimum required amount of ${min_payment:.2f}. Payment not processed.")
-                return
-
             if amount > loan.amount:
                 print(
                     f"Payment is greater than the loan amount. Please pay an amount up to ${loan.amount:.2f}.")
                 return
+            
+            if amount < (min_payment - loan.payment_this_month):
+                print(f"Minimum payment still not met. You will be charged a ${self.late_fee:.2f} late fee if the minimum payment is not met.")
+                print(f"Minimum required payment is ${min_payment:.2f}.")
 
             loan.pay(amount)
 
