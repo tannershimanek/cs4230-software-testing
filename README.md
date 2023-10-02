@@ -12,7 +12,7 @@
 - A customer can make a payment on a loan any number of times each month. The payment cannot be greater than the owed amount.
 - A customer can generate a bank report any number of times each month.
 - A customer can advance a month.
-- When a month is advanced, a the system will generate a report.
+- When a month is advanced, the system will generate a report.
 
 *The above items can be done through commands, excluding user id generation.*
 
@@ -83,15 +83,15 @@ Month 2: Applied $0.12 interest to savings. New balance: $400.12
 
 - A loan id will be issued by the system.
 - A customer can initiate a new loan. (max 3)
-- A customer cannot loan less than $500.
-- A cutsomer cannot loan more than $50_000.
-- A customer can make a payment on a loan greater than or equal to the minumum amount.
+- A customer cannot take out a loan less than $500.
+- A cutsomer cannot take out a loan more than $50_000.
+- A customer can make a loan payment of any amount up to the balance of the loan.
 - A customer can make any number of payments to a loan each month.
 - A loan payment cannot be greater than the owed amount.
-- If a customer fails to make a loan payment greater than or equal to the minimum payment before the month advances, they will receive a $50 late fee per loan. Even if the loan was created in the same month.
-- The minimum loan payment is `due interest` + `1% of principal` + `$50 late fee (if assessed)` or $10. Whichever is greatest. (due interest is 12% of the current balance)
+- If a customer fails to make a loan payment (or multiple payments) greater than or equal to the minimum payment before the month advances, they will receive a $50 late fee per loan. Even if the loan was created in the same month.
+- The minimum loan payment is `due interest` + `1% of principal` or $10. Whichever is greatest. (due interest is 12% APR of the current balance)
 - A loan is automatically closed at the moment the balance is paid.
-- The loan interest rate is a fixed 12% of the remaing balance issued monthly.
+- The loan interest rate is a fixed 12% APR of the remaing balance issued monthly.
 - Late fees and interest are added at the beginning of each month.
 - Payment to a loan will be taken from savings.
 - The loan payment cannot be greater than the amount in savings.
