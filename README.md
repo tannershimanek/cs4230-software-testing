@@ -4,8 +4,8 @@
 
 ## Customer
 
-- A customer is issued a user id by the system.
-- A customer has one savings accuont at all times.
+- A customer is issued a loan id by the system.
+- A customer has one savings account at all times.
 - A customer can initiate a new loan. (max 3)
 - A customer can Deposit into savings any number of times each month.
 - A customer can Withdraw from savings any number of times each month. The customer cannot withdraw more than the amount in savings.
@@ -14,7 +14,7 @@
 - A customer can advance a month.
 - When a month is advanced, the system will generate a report.
 
-*The above items can be done through commands, excluding user id generation.*
+*The above items can be done through commands, excluding loan id generation.*
 
 
 <br>
@@ -23,15 +23,15 @@
 
 ### Commands
 todo
-1. Advance Month
-2. Deposit to Savings
-3. Withdraw from Savings
-4. Create New Loan
-5. Pay Loan
-6. Show Savings Balance
-7. Show Loan
-8. Show All Loans
-9. Generate Report
+1. Advance Month - Advances bank system to the next month
+2. Deposit to Savings - Deposits an amount of money into customer savings account.
+3. Withdraw from Savings - Withdraws an amount of money from savings account.
+4. Create New Loan - A new loan is created with specified amount and interest rate.
+5. Pay Loan - Pay a specific amount towards a loan  identified by the loan id. 
+6. Show Savings Balance - Display the current savings account balance.
+7. Show Loan - Show the loan details identified by the loan id. 
+8. Show All Loans - Display the details of all the loans. 
+9. Generate Report - Generate and display a bank report.
 10. Help (shows a list of commands)
 0. exit (exits program)
 
@@ -95,6 +95,7 @@ Month 2: Applied $0.12 interest to savings. New balance: $400.12
 - Late fees and interest are added at the beginning of each month.
 - Payment to a loan will be taken from savings.
 - The loan payment cannot be greater than the amount in savings.
+- Interest is applied to loans before late fees are applied.
 
 
 <br>
@@ -103,6 +104,7 @@ Month 2: Applied $0.12 interest to savings. New balance: $400.12
 
 - The savings balance cannot be negative.
 - The user cannot withdraw or deposit an amount under 0.01.
+- The deposit amount cannot exceed $1,000,000.
 - The customer can deposit any number of times each month.
 - The customer can withdraw any number of times each month.
 - The customer cannot withdraw more than the amount in savings.
