@@ -27,23 +27,48 @@ class BankSystemTest(unittest.TestCase):
         self.assertEqual(self.savings.balance, self.initial_deposit)
 
     def test_negative_deposit_savings(self):
-        with self.assertRaises(ValueError):
-            self.savings.deposit(self.negative_amount)
+        self.savings.deposit(self.negative_amount)
+        self.assertEqual(self.savings.balance, 0)
 
     def test_zero_deposit_savings(self):
-        with self.assertRaises(ValueError):
-            self.savings.deposit(self.zero_amount)
+        self.savings.deposit(self.zero_amount)
+        self.assertEqual(self.savings.balance, 0)
 
     def test_too_large_deposit_savings(self):
-        with self.assertRaises(ValueError):
-            self.savings.deposit(self.billion)
+        self.savings.deposit(self.billion)
+        self.assertEqual(self.savings.balance, 0)
 
     def test_invalid_deposit_savings(self) -> None:
         with self.assertRaises(TypeError):
             self.savings.deposit('abc')
 
+    def test_withdrawl_valid_data(self):
+        self.savings.deposit(self.initial_deposit)
+        self.savings.withdraw(100)
+        self.assertEqual(self.savings.balance, 900)
 
+    def test_withdrawl_invalid_data(self):
+        self.savings.deposit(self.initial_deposit)
+        with self.assertRaises(TypeError):
+            self.savings.withdraw('abc')
+    
+    def test_withdrawl_more_than_balance(self):
+        self.savings.deposit(self.initial_deposit)
+        self.savings.withdraw(10000)
+        self.assertEqual(self.savings.balance, self.initial_deposit)
 
+    def test_withdrawl_zero(self):
+        self.savings.deposit(self.initial_deposit)
+        self.savings.withdraw(self.zero_amount)
+        self.assertEqual(self.savings.balance, self.initial_deposit)
+        
+    def test_withdrawl_multiple(self):
+        self.savings.deposit(self.initial_deposit)
+        self.savings.withdraw(100)
+        self.savings.withdraw(50)
+        self.savings.withdraw(25)
+        self.savings.withdraw(75)
+        self.assertEqual(self.savings.balance, 750)
 
     def test_pay_loan(self):
 
