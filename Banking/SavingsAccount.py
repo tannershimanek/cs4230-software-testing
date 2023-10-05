@@ -4,6 +4,8 @@ class SavingsAccount:
         self.interest_rate = interest_rate
 
     def deposit(self, amount):
+        if amount == 0:
+            return "Please make an actual deposit."
         if amount < 0:
             return "Deposit amount cannot be negative."
         if amount > 1000000:
