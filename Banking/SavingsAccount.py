@@ -28,4 +28,4 @@ class SavingsAccount:
         interest = (self.balance * self.interest_rate) / Decimal('100')
         interest = interest.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)  
         self.balance += interest
-        return f"Applied ${interest:.2f} interest. New savings balance: ${self.balance:.2f}" 
+        return f"Applied ${interest:.2f} interest. New savings balance: ${self.balance:.2f}"

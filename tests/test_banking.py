@@ -1,4 +1,5 @@
 import unittest
+from decimal import InvalidOperation
 from Banking.Loan import Loan
 from Banking.SavingsAccount import SavingsAccount
 import Banking.Commands as Commands
@@ -39,7 +40,7 @@ class BankSystemTest(unittest.TestCase):
         self.assertEqual(self.savings.balance, 0)
 
     def test_invalid_deposit_savings(self) -> None:
-        with self.assertRaises(TypeError):
+        with self.assertRaises(InvalidOperation):
             self.savings.deposit('abc')
 
     def test_withdrawl_valid_data(self):
@@ -49,7 +50,7 @@ class BankSystemTest(unittest.TestCase):
 
     def test_withdrawl_invalid_data(self):
         self.savings.deposit(self.initial_deposit)
-        with self.assertRaises(TypeError):
+        with self.assertRaises(InvalidOperation):
             self.savings.withdraw('abc')
     
     def test_withdrawl_more_than_balance(self):

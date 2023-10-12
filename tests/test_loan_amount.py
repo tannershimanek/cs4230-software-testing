@@ -1,5 +1,6 @@
 import unittest
 from Banking.Loan import Loan
+from decimal import InvalidOperation
 
 class TestLoanInitialization(unittest.TestCase):
 
@@ -17,7 +18,7 @@ class TestLoanInitialization(unittest.TestCase):
             Loan(-5000, 12)
 
     def test_is_number(self) -> None:
-        with self.assertRaises(TypeError):
+        with self.assertRaises(InvalidOperation):
             Loan('abc', 12)
 
 if __name__ == "__main__":
