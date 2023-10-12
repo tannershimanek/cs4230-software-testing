@@ -31,19 +31,19 @@ def driver():
         if command == "advance_month" or command == "1":
             cmd = Commands.AdvanceMonthCommand()
         elif command == "deposit_to_savings" or command == "2":
-            amount = BankSystem.validate_float_input("Enter amount to deposit (Up to $1,000,000): ")
+            amount = BankSystem.validate_decimal_input("Enter amount to deposit (Up to $1,000,000): ")
             cmd = Commands.DepositToSavingsCommand(amount)
         elif command == "withdraw_from_savings" or command == "3":
-            amount = BankSystem.validate_float_input("Enter amount to withdraw: ")
+            amount = BankSystem.validate_decimal_input("Enter amount to withdraw: ")
             cmd = Commands.WithdrawFromSavingsCommand(amount)
         elif command == "create_new_loan" or command == "4":
-            amount = BankSystem.validate_float_input("Enter loan amount: ")
+            amount = BankSystem.validate_decimal_input("Enter loan amount: ")
             # interest_rate = float(input("Enter interest rate: "))
             interest_rate = config.BANK_CONFIG.get('interest_rate')
             cmd = Commands.CreateNewLoanCommand(amount, interest_rate)
         elif command == "pay_loan" or command == "5":
             loan_id = BankSystem.validate_int_input("Enter loan ID: ")
-            amount = BankSystem.validate_float_input("Enter amount to pay: ")
+            amount = BankSystem.validate_decimal_input("Enter amount to pay: ")
             cmd = Commands.PayLoanCommand(loan_id, amount)
         elif command == "show_savings_balance" or command == "6":
             cmd = Commands.ShowSavingsBalanceCommand()
