@@ -1,6 +1,9 @@
 from Banking.Loan import Loan
 from Banking.SavingsAccount import SavingsAccount
 import config
+from decimal import Decimal, ROUND_DOWN
+from decimal import Decimal, InvalidOperation
+
 
 # note: interest is applied to the loan amount before the late fee is applied
 
@@ -69,13 +72,13 @@ class BankSystem:
 
     @classmethod
     def show_savings_balance(self):
-        print(f"Savings balance: ${self.savings.balance:.2f}")
+        print(f"Savings balance: ${Decimal(str(self.savings.balance)):.2f}")
 
     @classmethod
     def create_new_loan(self, amount, interest_rate):
         try:
-            amount = float(amount)
-            interest_rate = float(interest_rate)
+            amount = Decimal(amount)
+            interest_rate = Decimal(interest_rate)
         except ValueError:
             print("Invalid input types for loan amount or interest rate.")
             return
@@ -84,7 +87,7 @@ class BankSystem:
             print("Maximum number of loans reached. Cannot create a new loan.")
             return
 
-        if 500 <= amount <= 50000:
+        if Decimal('500') <= amount <= Decimal('50000'):
             loan_id = self.current_loan_number + 1
             self.current_loan_number += 1
             self.loans[loan_id] = Loan(amount, interest_rate)
@@ -99,11 +102,11 @@ class BankSystem:
         """Pays the given amount to the given loan from the savings account."""
         try:
             loan_id = int(loan_id)
-            amount = float(amount)
+            amount = Decimal(amount)
         except ValueError:
             print("Invalid loan ID or amount. Please enter numerical values.")
             return
-        if amount > self.savings.balance:
+        if amount > Decimal(str(self.savings.balance)):
             print(f"Payment amount exceeds savings balance. Payment not processed.")
             return
 
@@ -127,7 +130,7 @@ class BankSystem:
             self.log_transaction(
                 f"Paid ${amount:.2f} for loan {loan_id}. Remaining amount: ${loan.amount:.2f}")
 
-            if loan.amount < 0.01:
+            if loan.amount < Decimal('0.01'):
                 self.loans.pop(loan_id)
                 self.log_transaction(f"Loan {loan_id} paid off!")
                 print(f"Loan {loan_id} paid off!")
@@ -140,12 +143,18 @@ class BankSystem:
     @classmethod
     def process_loan_interest(self):
         for loan_id, loan in self.loans.items():
-            interest = loan.apply_interest()
+            # Assuming loan.apply_interest() returns a Decimal or can be safely converted to Decimal
+            try:
+                interest = Decimal(loan.apply_interest())
+            except InvalidOperation:
+                print(f"Invalid interest value for loan {loan_id}. Skipping.")
+                continue
+
             self.log_transaction(
                 f"Applied ${interest:.2f} interest to loan {loan_id}. New balance: ${loan.amount:.2f}")
             print(
                 f"Applied ${interest:.2f} interest to loan {loan_id}. New balance: ${loan.amount:.2f}")
-
+            
     @classmethod
     def show_loan(self, loan_id):
         """Shows the given loan."""
@@ -209,16 +218,15 @@ class BankSystem:
         0. Exit
         """)
 
-
     @staticmethod
-    def validate_float_input(prompt):
-        """ Ensures that input is a float value """
+    def validate_decimal_input(prompt):
+        """ Ensures that input is a valid decimal number """
         while True:
             try:
-                return float(input(prompt))
-            except ValueError:
+                return Decimal(input(prompt))
+            except InvalidOperation:  # This exception is specific to Decimal
                 print("Invalid input. Please enter a numerical value.")
-
+   
     @staticmethod
     def validate_int_input(prompt):
         """ Ensures that input is an int"""

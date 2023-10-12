@@ -8,7 +8,7 @@ class SavingsAccount:
     def deposit(self, amount):
         amount = Decimal(str(amount)).quantize(Decimal('0.01'), rounding=ROUND_DOWN)
         if amount <= 0:
-            return "Deposit amount must be positive."
+            return "Deposit amount must be a positive value."
         if amount > 1000000:
             return "Deposit cannot exceed $1,000,000."
         self.balance += amount
@@ -17,15 +17,15 @@ class SavingsAccount:
     def withdraw(self, amount):
         amount = Decimal(str(amount)).quantize(Decimal('0.01'), rounding=ROUND_DOWN)
         if amount <= 0:
-            return "Please enter a valid withdrawal amount."
+            return "Withdrawal amount must be a positive value."
         if amount <= self.balance:
             self.balance -= amount
-            return f"Withdrew ${amount:.2f}. New balance: ${self.balance:.2f}"  # Ensure balance is also rounded
+            return f"Withdrew ${amount:.2f}. New balance: ${self.balance:.2f}" 
         else:
             return "Insufficient funds!"
 
     def apply_interest(self):
         interest = (self.balance * self.interest_rate) / Decimal('100')
-        interest = interest.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)  # Choose rounding that suits your requirement
+        interest = interest.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)  
         self.balance += interest
-        return f"Applied ${interest:.2f} interest. New savings balance: ${self.balance:.2f}"  # Ensure balance is also rounded
+        return f"Applied ${interest:.2f} interest. New savings balance: ${self.balance:.2f}" 
