@@ -25,7 +25,8 @@ class SavingsAccount:
             return "Insufficient funds!"
 
     def apply_interest(self):
-        interest = (self.balance * self.interest_rate) / Decimal('100')
-        interest = interest.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)  
+        monthly_interest_rate = self.interest_rate / Decimal("12")
+        interest = self.balance * monthly_interest_rate
+        interest = interest.quantize(Decimal('0.01'), rounding=ROUND_DOWN)
         self.balance += interest
         return f"Applied ${interest:.2f} interest. New savings balance: ${self.balance:.2f}"

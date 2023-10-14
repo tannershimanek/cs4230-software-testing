@@ -4,7 +4,7 @@
 
 ## Customer
 
-- A customer is issued a loan id by the system.
+- A customer is issued a loan id by the system for each loan they have.
 - A customer has one savings account at all times.
 - A customer can initiate a new loan. (max 3)
 - A customer can Deposit into savings any number of times each month.
@@ -108,4 +108,4 @@ Month 2: Applied $0.12 interest to savings. New balance: $400.12
 - The customer can deposit any number of times each month.
 - The customer can withdraw any number of times each month.
 - The customer cannot withdraw more than the amount in savings.
-- Savings interest is applied at the beginning of each month at 3%.
+- Savings interest is applied at the beginning of each month at 3% APR.
