@@ -1,6 +1,6 @@
 # Welcome to WeCheatEm' Bank!
 
-'WeCheatEm Bank' provides users with a banking simulation experience. It allows users to interact with a variety
+WeCheatEm' Bank provides users with a banking simulation experience. It allows users to interact with a variety
 of banking operations in order to manage customer loans and savings accounts. 
 
 
@@ -8,7 +8,7 @@ of banking operations in order to manage customer loans and savings accounts.
 
 ## Prerequisites:
 
- In order to run the program, you must have Python installed. If not, download and install Python from python.org.
+ In order to run the program, you must have Python 3 installed. If not, download and install Python 3 from python.org.
 
 <br>
 
