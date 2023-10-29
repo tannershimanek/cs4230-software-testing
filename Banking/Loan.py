@@ -15,6 +15,10 @@ class Loan:
             raise ValueError("Loan amount cannot be zero")
         if amount < Decimal("0"):
             raise ValueError("Loan amount cannot be negative")
+        if amount < Decimal("500"):
+            raise ValueError("Loan amount cannot be less than 500")
+        if amount > Decimal("50000"):
+            raise ValueError("Loan amount cannot be greater than 50,000")
         self.amount = amount
         if interest_rate == Decimal("0"):
             raise ValueError("Interest rate cannot be zero")

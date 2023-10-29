@@ -15,6 +15,9 @@ class ValidSavingsAccount:
         if amount < 0:
             raise ValueError("Deposit amount cannot be negative.")
 
+        if amount > 1_000_000:
+            return "Deposit cannot exceed $1,000,000."
+
         self.balance += amount
         return f"Deposited ${amount:.2f}. New balance: ${self.balance:.2f}"
 
@@ -52,6 +55,16 @@ class TestValidSavingsAccount(unittest.TestCase):
         acc = ValidSavingsAccount(5)
         result = acc.deposit(100)
         self.assertEqual(result, "Deposited $100.00. New balance: $100.00")
+    
+    def test_upper_deposit_boundary(self):
+        acc = ValidSavingsAccount(5)
+        result = acc.deposit(1_000_000)
+        self.assertEqual(result, "Deposited $1000000.00. New balance: $1000000.00")
+
+    def test_deposit_over_1_000_000(self):
+        acc = ValidSavingsAccount(5)
+        result = acc.deposit(1_000_001)
+        self.assertEqual(result, "Deposit cannot exceed $1,000,000.")
 
     def test_valid_deposit_zero_amount(self):
         acc = ValidSavingsAccount(5)
