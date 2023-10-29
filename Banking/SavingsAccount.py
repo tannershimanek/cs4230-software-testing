@@ -9,7 +9,7 @@ class SavingsAccount:
         amount = Decimal(str(amount)).quantize(Decimal('0.01'), rounding=ROUND_DOWN)
         if amount <= 0:
             return "Deposit amount must be a positive value."
-        if amount > 1000000:
+        if amount > 1_000_000:
             return "Deposit cannot exceed $1,000,000."
         self.balance += amount
         return f"Deposited ${amount:.2f}. New balance: ${self.balance:.2f}"
