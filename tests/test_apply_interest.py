@@ -20,7 +20,7 @@ class TestInterestRate(unittest.TestCase):
         with self.assertRaises(ValueError):
             Loan(5000, 19)
 
-    def test_is_number(self) -> None: 
+    def test_is_number(self) -> None:
         with self.assertRaises(InvalidOperation):
             Loan(5000, 'abc')
 
