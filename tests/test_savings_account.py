@@ -82,6 +82,18 @@ class TestValidSavingsAccount(unittest.TestCase):
         result = acc.withdraw(50)
         self.assertEqual(result, "Withdrew $50.00. New balance: $50.00")
 
+    def test_upper_withdraw_boundary(self):
+        acc = ValidSavingsAccount(5)
+        acc.deposit(100)
+        result = acc.withdraw(100)
+        self.assertEqual(result, "Withdrew $100.00. New balance: $0.00")
+    
+    def test_invalid_upper_withdraw_boundary(self):
+        acc = ValidSavingsAccount(5)
+        acc.deposit(100)
+        with self.assertRaises(ValueError):
+            acc.withdraw(100.01)
+
     def test_invalid_withdrawal_negative(self):
         acc = ValidSavingsAccount(5)
         with self.assertRaises(ValueError):
@@ -114,6 +126,12 @@ class TestValidSavingsAccount(unittest.TestCase):
         acc.deposit(100)
         with self.assertRaises(ValueError):
             acc.withdraw(150)
+
+    def test_invalid_lower_withdraw(self):
+        acc = ValidSavingsAccount(5)
+        acc.deposit(100)
+        with self.assertRaises(ValueError):
+            acc.withdraw(-0.01)
 
 if __name__ == "__main__":
     unittest.main()

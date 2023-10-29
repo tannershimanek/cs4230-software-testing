@@ -38,11 +38,18 @@ class Loan:
 
     def apply_late_fee(self) -> None:
         rounded_late_fee = self.late_fee.quantize(Decimal('0.01'), rounding=ROUND_DOWN)
-        self.amount += rounded_late_fee
+        self.amount += rounded_late_fee 
 
 
     def pay(self, amount) -> None:
         amount = Decimal(amount).quantize(Decimal('0.01'), rounding=ROUND_DOWN)
+        if amount == Decimal("0"):
+            raise ValueError("Payment amount cannot be zero")
+        if amount < Decimal("0"):
+            raise ValueError("Payment amount cannot be negative")
+        if amount > self.amount:
+            raise ValueError("Payment amount cannot be greater than loan amount")
+
         self.amount -= amount
         self.payment_this_month += amount
 
