@@ -1,5 +1,5 @@
 BANK_CONFIG = {
-  'intital_user_id': 0,
+  'inital_user_id': 0,
   'loan_key': 1,
   'savings_key': 2,
   'interest_rate': 12,

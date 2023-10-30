@@ -1,16 +1,15 @@
 from Banking.Loan import Loan
 from Banking.SavingsAccount import SavingsAccount
 import config
-from decimal import Decimal, ROUND_DOWN
 from decimal import Decimal, InvalidOperation
 
 
-# note: interest is applied to the loan amount before the late fee is applied
-
-# Receiver
-
-
 class BankSystem:
+
+    """
+    Represents a bank system that manages savings accounts and loans.
+
+    """
     savings = SavingsAccount(config.BANK_CONFIG.get('savings_rate'))
     late_fee = config.BANK_CONFIG.get('late_fee')
     loans = {}
@@ -21,6 +20,11 @@ class BankSystem:
 
     @classmethod
     def advance_month(self):
+        """
+        Advances the bank system by one month, applies interest, fees,
+        and generates monthly report.
+
+        """
         self.current_month += 1
         print(f"Advanced to month {self.current_month}\n")
 
@@ -42,40 +46,43 @@ class BankSystem:
         self.generate_report()
 
     @classmethod
-    def create_savings_account(self):
-        """ Creates a savings account. """
-        pass
-        
-
-    @classmethod
     def log_transaction(self, description):
         """Logs a transaction to the transactions list for the bank report."""
         self.transactions.append(f"Month {self.current_month}: {description}")
 
     @classmethod
     def deposit_to_savings(self, amount):
+        """ Deposits specified amount to the savings account.
+            Args: amount (Decimal): Amount to be deposited.
+        """
         message = self.savings.deposit(amount)
         self.log_transaction(message)
         print(message)
 
     @classmethod
     def withdraw_from_savings(self, amount):
+        """ Withdraws specified amount to the savings account.
+            Args: amount (Decimal): Amount to be withdrawn.
+        """
         message = self.savings.withdraw(amount)
         self.log_transaction(message)
         print(message)
 
     @classmethod
     def process_savings_interest(self):
+        """ Processes and applies interest to the savings account."""
         message = self.savings.apply_interest()
         self.log_transaction(message)
         print(message)
 
     @classmethod
     def show_savings_balance(self):
+        """Displays the current savings account balance."""
         print(f"Savings balance: ${Decimal(str(self.savings.balance)):.2f}")
 
     @classmethod
     def create_new_loan(self, amount, interest_rate):
+        """ Creates a new loan w/ specified amount and interest rate."""
         try:
             amount = Decimal(amount)
             interest_rate = Decimal(interest_rate)
@@ -107,7 +114,7 @@ class BankSystem:
             print("Invalid loan ID or amount. Please enter numerical values.")
             return
         if amount > Decimal(str(self.savings.balance)):
-            print(f"Payment amount exceeds savings balance. Payment not processed.")
+            print("Payment amount exceeds savings balance. Payment not processed.")
             return
 
         if loan_id in self.loans:
@@ -118,7 +125,7 @@ class BankSystem:
                 print(
                     f"Payment is greater than the loan amount. Please pay an amount up to ${loan.amount:.2f}.")
                 return
-            
+
             if amount < (min_payment - loan.payment_this_month):
                 print(f"Minimum payment still not met. You will be charged a ${self.late_fee:.2f} late fee if the minimum payment is not met.")
                 print(f"Minimum required payment is ${min_payment:.2f}.")
@@ -142,8 +149,8 @@ class BankSystem:
 
     @classmethod
     def process_loan_interest(self):
+        """ Processes and applies interest to all loans"""
         for loan_id, loan in self.loans.items():
-            # Assuming loan.apply_interest() returns a Decimal or can be safely converted to Decimal
             try:
                 interest = Decimal(loan.apply_interest())
             except InvalidOperation:
@@ -154,7 +161,7 @@ class BankSystem:
                 f"Applied ${interest:.2f} interest to loan {loan_id}. New balance: ${loan.amount:.2f}")
             print(
                 f"Applied ${interest:.2f} interest to loan {loan_id}. New balance: ${loan.amount:.2f}")
-            
+
     @classmethod
     def show_loan(self, loan_id):
         """Shows the given loan."""
@@ -224,9 +231,9 @@ class BankSystem:
         while True:
             try:
                 return Decimal(input(prompt))
-            except InvalidOperation:  # This exception is specific to Decimal
+            except InvalidOperation:
                 print("Invalid input. Please enter a numerical value.")
-   
+
     @staticmethod
     def validate_int_input(prompt):
         """ Ensures that input is an int"""
@@ -235,3 +242,8 @@ class BankSystem:
                 return int(input(prompt))
             except ValueError:
                 print("Invalid input. Please enter an integer.")
+
+    @staticmethod
+    def loan_exists(loan_id):
+        """ Ensures that the loan id actually exists"""
+        return loan_id in [loan.id for loan in BankSystem.loans if hasattr(loan, 'id')]

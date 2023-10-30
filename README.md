@@ -3,6 +3,7 @@
 WeCheatEm' Bank provides users with a banking simulation experience. It allows users to interact with a variety
 of banking operations in order to manage customer loans and savings accounts. 
 
+Note: This banking system does not save or store any data between runs. Once you exit the program, all entered data and operations are discarded, ensuring there is no persistence of any information.
 
 <br>
 
